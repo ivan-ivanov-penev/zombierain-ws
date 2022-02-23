@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Properties>
+        <Property name="root.location">logs/</Property>
+        <Property name="pattern">%d{yyyy-MM-dd HH:mm:ss.SSS} %level [%t] %c{1.}: %m%n%ex</Property>
+    </Properties>
+    <Appenders>
+        <Console name="console.appender" target="SYSTEM_OUT">
+            <PatternLayout pattern="${pattern}"/>
+        </Console>
+        <RollingFile name="main.appender">
+            <fileName>${root.location}/app.log</fileName>
+            <filePattern>${root.location}/app-%i.log</filePattern>
+            <PatternLayout pattern="${pattern}"/>
+            <SizeBasedTriggeringPolicy size="25 MB" />
+            <DefaultRolloverStrategy max="10" />
+        </RollingFile>
+        <RollingFile name="game-requests.appender">
+            <fileName>${root.location}/games.log</fileName>
+            <filePattern>${root.location}/games-%i.log</filePattern>
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %m%n"/>
+            <SizeBasedTriggeringPolicy size="25 MB" />
+            <DefaultRolloverStrategy max="10" />
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <Logger name="com.wss" additivity="false">
+            <AppenderRef ref="console.appender" />
+            <AppenderRef ref="main.appender" />
+        </Logger>
+        <Logger name="game-requests.logger" additivity="false">
+            <AppenderRef ref="game-requests.appender" />
+        </Logger>
+        <Root level="info">
+            <AppenderRef ref="console.appender" />
+            <AppenderRef ref="main.appender" />
+        </Root>
+    </Loggers>
+</Configuration>

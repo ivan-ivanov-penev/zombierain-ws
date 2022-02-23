@@ -1,0 +1,17 @@
+[Unit]
+Description=Zombie Rain
+
+[Service]
+WorkingDirectory=/opt/zombierain/ws
+SyslogIdentifier=Zombie Rain WS
+ExecStart=/bin/bash -c "/usr/bin/java -jar zombierain-ws-*.jar -Xmx768m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/opt/zombierain/ws/heap-dumps/"
+Environment=SPRING_CONFIG_LOCATION=/etc/zombierain/ws/application.properties
+Environment=LOGGING_CONFIG=/etc/zombierain/ws/log4j2.xml
+KillSignal=TERM
+SendSIGKILL=yes
+User=zombierain-ws
+Type=simple
+SuccessExitStatus=143
+
+[Install]
+WantedBy=multi-user.target
